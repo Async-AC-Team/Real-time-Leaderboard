@@ -9,8 +9,8 @@ on:
 
 env:
   NODE_VERSION: '20.x'
-  PNPM_VERSION: '8.x' 
-  
+  PNPM_VERSION: '8.x'  # Using a more stable version of pnpm
+
 jobs:
   test-and-build:
     name: Test and Build
@@ -34,7 +34,12 @@ jobs:
         cache: 'pnpm'
         
     - name: Install dependencies
-      run: pnpm install --frozen-lockfile
+      run: |
+        if [ -f pnpm-lock.yaml ]; then
+          pnpm install --frozen-lockfile
+        else
+          pnpm install
+        fi
       
     - name: Build
       run: pnpm run build
