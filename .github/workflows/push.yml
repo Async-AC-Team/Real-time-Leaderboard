@@ -9,7 +9,7 @@ on:
 
 env:
   NODE_VERSION: '20.x'
-  PNPM_VERSION: '10.x'
+  PNPM_VERSION: 'latest'
 
 jobs:
   test-and-build:
@@ -27,12 +27,13 @@ jobs:
         cache: 'pnpm'
         
     - name: Setup pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v4
       with:
         version: ${{ env.PNPM_VERSION }}
         
     - name: Install dependencies
       run: pnpm install
+
     - name: Build
       run: pnpm run build
       
@@ -43,5 +44,3 @@ jobs:
     #   run: pnpm run test:e2e
     # - name: Lint
     #   run: pnpm run lint
-      
-
