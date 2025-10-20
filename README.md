@@ -2,14 +2,10 @@
 
 A full-stack system that provides real-time leaderboard tracking for users across multiple games or activities. The project demonstrates real-time data management, ranking logic, and scalable architecture using modern web technologies.
 
----
-
 ## Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
-
----
 
 ## Overview
 
@@ -22,8 +18,6 @@ The **Real-time Leaderboard** project provides a platform where users can:
 - Generate reports of top players for a specific time period.
 
 The system leverages Redis sorted sets for efficient real-time leaderboard management, making it scalable and performant.
-
----
 
 ## Features
 
