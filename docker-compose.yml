@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  app:
+    image: postgres:13
+    container_name: multi_tenant_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: postgres8090
+      POSTGRES_DB: Multi-Tenant
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    volumes:
+      - app_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  cache:
+    image: redis:6
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    volumes:
+      - cache_data:/data
+    restart: unless-stopped
+
+  api:
+    container_name: multi_tenant_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: pnpm run start:dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      DATABASE_HOST: app
+      DATABASE_PORT: 5432
+      DATABASE_USER: user
+      DATABASE_PASSWORD: postgres8090
+      DATABASE_NAME: Multi-Tenant
+      REDIS_HOST: cache
+      REDIS_PORT: 6379
+    depends_on:
+      - app
+      - cache
+    networks:
+      - backend
+    restart: unless-stopped
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  app_data:
+  cache_data:
