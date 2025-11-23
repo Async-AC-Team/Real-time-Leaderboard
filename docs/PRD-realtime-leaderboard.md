@@ -1,46 +1,68 @@
-# PRD: Real-Time Leaderboard
-
+# PRD: Multi-Tenant API Management 
 ## 1. Project Overview
 
-The goal is to build a real-time leaderboard platform where users can register, submit scores for different games or activities, and view leaderboards that update in real time. Redis will power the leaderboard ranking logic for performance and scalability, while PostgreSQL will store persistent user and score history data.
+A **multi-tenant API management platform** is a system that allows multiple organizations (tenants) to manage, secure, and monitor their APIs through a shared infrastructure while keeping their data and configurations completely isolated from each other.
 
-## 2. Core Features
+Think of it like an apartment building: multiple tenants live in the same building (shared infrastructure), but each has their own private apartment with locked doors (data isolation). Each tenant can customize their space independently without affecting others.
 
-### 1. User Authentication
+## 2. Key Features
 
-- Users can register and log in using email and password.
-- JWT-based authentication (access + refresh tokens).
-- Auth endpoints (register, login, logout, refresh).
-- Tech: NestJS (Auth module), PostgreSQL (Users table).
+**Core API Management:**
 
-### 2. Score Submission
+- API Gateway (routing, load balancing)
+- Rate limiting and throttling
+- Authentication and authorization (API keys, OAuth, JWT)
+- Request/response transformation
+- Caching mechanisms
+- API versioning
 
-- Users submit scores for specific games or activities.
-- Each submission updates Redis leaderboard and persists in PostgreSQL for history.
-- API validation (score must be numeric, positive, and higher than previous if applicable).
-- Tech: NestJS (Scores module), Redis (Sorted Sets), PostgreSQL (ScoreHistory table).
+**Multi-Tenancy Specific:**
 
-### 3. Leaderboard Display
+- **Tenant isolation** - Complete data and configuration separation
+- **Custom domains** - Each tenant can use their own domain
+- **Role-based access control (RBAC)** - Per-tenant user management
+- **Quota management** - Different limits per tenant tier
+- **Billing integration** - Usage tracking per tenant
 
-- Global leaderboard showing top N players across all games.
-- Individual game leaderboard view (e.g., “Top 10 in Chess”).
-- Paginated or infinite scroll leaderboard (Redis rank queries).
+**Security:**
 
-### 4. Real-Time Updates
+- SSL/TLS termination
+- IP whitelisting/blacklisting per tenant
+- DDoS protection
+- Security policy enforcement
+- API key rotation
 
-- When a user submits a new score, others viewing the leaderboard see live updates.
-- Implemented via WebSocket (Socket.IO).
-- Tech: Socket.IO integration between NestJS and React.
+**Analytics & Monitoring:**
 
-### 5. User Rankings
+- Real-time API metrics (per tenant)
+- Usage analytics and reports
+- Error tracking and logging
+- Performance monitoring
+- Custom dashboards
 
-- Users can view their personal rank and score among all players.
-- Endpoint: /leaderboard/:game/my-rank.
-- Tech: Redis rank query (ZREVRANK + ZSCORE).
+**Developer Portal:**
 
-### 6. Top Players Report
+- Tenant-branded developer portals
+- API documentation
+- Interactive API testing
+- SDK generation
+- Developer onboarding workflows
 
-- Generate reports of top players within a date range.
-- Admin or system-generated (JSON or CSV).
-- Example: “Top players in Game X between Oct 1–7.”
-- Tech: Query PostgreSQL (ScoreHistory) for aggregated data.
+**Administrative:**
+
+- Tenant provisioning and management
+- Subscription tier management
+- White-labeling options
+- Backup and disaster recovery
+- Audit logs per tenant
+
+**Integration:**
+
+- CI/CD pipeline integration
+- Webhook support
+- Third-party service connectors
+- Custom plugin/middleware support
+
+
+---
+[Multi-Tenant API Management](https://www.notion.so/Multi-Tenant-API-Management-Platform-AC-2a872cc6fd8580f897fefde03649320f)
